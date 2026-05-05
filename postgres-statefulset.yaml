@@ -11,16 +11,31 @@ spec:
   replicas: 1
   selector:
     matchLabels: *labels
+
   template:
     metadata:
       labels: *labels
     spec:
       containers:
       - name: postgres
-        image: postgres:latest
+        image: postgres:16
         ports:
         - name: postgres
           containerPort: 5432
+
         envFrom:
         - secretRef:
             name: postgres-secrets
+
+        volumeMounts:
+        - name: postgres-data
+          mountPath: /var/lib/postgresql/data
+
+  volumeClaimTemplates:
+  - metadata:
+      name: postgres-data
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      resources:
+        requests:
+          storage: 10Gi
