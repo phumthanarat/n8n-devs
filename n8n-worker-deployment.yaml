@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: n8n-worker-deployment
-  namespace: default
+  namespace: n8n-devs
   labels: &labels
     app: n8n-worker
     component: deployment
